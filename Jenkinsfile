@@ -2,7 +2,7 @@ pipeline {
     agent any 
     
     tools{
-        jdk 'jdk11'
+        jdk 'jdk21'
         maven 'maven3'
     }
     
@@ -14,7 +14,7 @@ pipeline {
         
         stage("Git Checkout"){
             steps{
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/Petclinic.git'
+                git changelog: false, poll: false, url: 'https://github.com/Deepak-gitdemo/Petclinic.git'
             }
         }
         
@@ -66,13 +66,7 @@ pipeline {
                 }
             }
         }
-        
-        stage("TRIVY"){
-            steps{
-                sh " trivy image adijaiswal/pet-clinic123:latest"
-            }
-        }
-        
+              
         stage("Deploy To Tomcat"){
             steps{
                 sh "cp  /var/lib/jenkins/workspace/CI-CD/target/petclinic.war /opt/apache-tomcat-9.0.65/webapps/ "
